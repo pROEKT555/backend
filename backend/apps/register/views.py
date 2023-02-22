@@ -39,11 +39,15 @@ class LoginView(APIView):
             user = Register.objects.all()
             obg = serializer.validated_data
             has_user_found = False
+            passworld_is_correct = False
 
             for i in user:
                 if (obg['login'] == i.login or
                      obg['login'] == i.email):
                     has_user_found = True
+                    if obg['passworld'] == i.passworld:
+                         passworld_is_correct = True
                     break
 
-            return Response({'has_user_found': has_user_found})
+            return Response({'has_user_found': has_user_found,
+                             "passworld_is_correct": passworld_is_correct})
