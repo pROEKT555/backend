@@ -16,10 +16,9 @@ class ContentView(APIView):
     
     def post(self, request):
         serializer = ContentSerializer(data=request.data)
-        print(serializer)
         if serializer.is_valid(raise_exception=True):
             # user = Content.objects.all()
-            obg = serializer.validated_data
+            # obg = serializer.validated_data
             # has_user = False
 
             # for i in user:
@@ -30,7 +29,7 @@ class ContentView(APIView):
 
             # if has_user == False:
             serializer.save()
-            return Response(obg)
+            return Response({"complite": True})
         else:
             return Response(serializer.errors, status=400)
 
