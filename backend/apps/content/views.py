@@ -1,12 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Content
+from register.models import Register
 from .serializer import ContentSerializer
 
 class ContentView(APIView):
     def get(self, request):
         output = [{
                 "author_id": output.author_id,
+                "author_name": Register.objects.get(id=output.author_id).login,
                 "name": output.name,
                 "descript": output.descript,
                 "files": output.files
@@ -30,6 +32,3 @@ class ContentView(APIView):
             # if has_user == False:
             serializer.save()
             return Response({"complite": True})
-        else:
-            return Response(serializer.errors, status=400)
-
