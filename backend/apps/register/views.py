@@ -4,15 +4,6 @@ from .models import Register
 from .serializer import RegisterSerializer
 
 class RegisterView(APIView):
-    # def get(self, request):
-    #     output = [{
-    #             "login": output.login,
-    #             "passworld": output.passworld,
-    #             "email": output.email
-    #         } for output in Register.objects.all()
-    #     ]
-    #     return Response(output)
-
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
