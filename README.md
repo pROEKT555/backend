@@ -25,6 +25,7 @@
  "is_true": false
 }]
 ```
+Абсолютно всі відомості, що до тестів відображаються в `/test/`
 
 First, install the necessary modules `pip install -r requirements.txt`
 
