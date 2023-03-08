@@ -47,20 +47,20 @@ class TestView(APIView):
         test_serializer = TestSerializer(data=request.data)
 
         if test_serializer.is_valid():
-            test_serializer.save()
+            obj = test_serializer.save()
         else:
             return Response(test_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(status=status.HTTP_201_CREATED)
+        return Response({"id": obj.id}, status=status.HTTP_201_CREATED)
 
 class QuestionView(APIView):
     def post(self, request):
         question_serializer = QuestionSerializer(data=request.data)
 
         if question_serializer.is_valid():
-            question_serializer.save()
+            obj = question_serializer.save()
         else:
-            return Response(question_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"id": obj.id}, question_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(status=status.HTTP_201_CREATED)
 
