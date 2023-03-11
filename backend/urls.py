@@ -9,7 +9,5 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('content/', ContentView.as_view(), name='content'),
     path('test/', TestView.as_view(), name='test'),
-    path('test/question/', QuestionView.as_view(), name='question'),
-    path('test/answer/', AnswerView.as_view(), name='answer'),
     path('admin/', admin.site.urls),
 ]
