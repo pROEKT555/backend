@@ -70,32 +70,4 @@ class TestView(APIView):
             else:
                 return Response(answer_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(request.data)
-
-"""
-[
- {
-  "author": 1,
-  "name": "zxcv"
- },
- {
-  "text": "test"
- },
- [{
-  "text": "калясік",
-  "is_true": true
- },
- {
-  "text": "дурень"
- }],
- {
-  "text": "tessssssssst"
- },
- [{
-  "text": "каdік",
-  "is_true": true
- },
- {
-  "text": "dнь"
- }]]
-"""
+        return Response(status=status.HTTP_201_CREATED)
