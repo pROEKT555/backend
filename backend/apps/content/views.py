@@ -52,18 +52,20 @@ class TestView(APIView):
         else:
             return Response(test_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        for i in range(0, len(request.data), 2):
+        for i in range(len(request.data)):
             request.data[i]["test"] = int(obj_test.id)
-            question_serializer = QuestionSerializer(data=request.data[i])
+            question_complit_data = {"test": request.data[i]["test"],
+                                     "text": request.data[i]["text"]}
+            question_serializer = QuestionSerializer(data=question_complit_data)
 
             if question_serializer.is_valid():
                 obj_question = question_serializer.save()
             else:
                 return Response(question_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-            for j in range(len(request.data[i+1])):
-                request.data[i+1][j]["question"] = int(obj_question.id)
-            answer_serializer = AnswerSerializer(data=request.data[i+1], many=True)
+            for j in range(len(request.data[i]["answ"])):
+                request.data[i]["answ"][j]["question"] = int(obj_question.id)
+            answer_serializer = AnswerSerializer(data=request.data[i]["answ"], many=True)
 
             if answer_serializer.is_valid():
                 answer_serializer.save()
