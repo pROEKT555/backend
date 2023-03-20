@@ -14,6 +14,7 @@ class Tests(models.Model):
 
 class Question(models.Model):
     test = models.ForeignKey(Tests, on_delete=models.CASCADE)
+    quzitrue = models.IntegerField()
     text = models.TextField()
 
 class Answer(models.Model):

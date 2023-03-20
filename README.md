@@ -8,6 +8,7 @@
  },
  {
   "text": "test1",
+  "quzitrue":2,
   "answ": [
    {
     "text": "answ1",
@@ -20,6 +21,7 @@
  },
  {
   "text": "test2",
+  "quzitrue":2,
   "answ": [
    {
     "text": "answ3",

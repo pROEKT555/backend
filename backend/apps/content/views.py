@@ -32,6 +32,7 @@ class TestView(APIView):
             } for output in Tests.objects.all()]
         question_output = [{
                 "test_id": output.test_id,
+                "quzitrue": output.quzitrue,
                 "text": output.text
             } for output in Question.objects.all()]
         answer_output = [{
@@ -55,7 +56,8 @@ class TestView(APIView):
         for i in range(len(request.data)):
             request.data[i]["test"] = int(obj_test.id)
             question_complit_data = {"test": request.data[i]["test"],
-                                     "text": request.data[i]["text"]}
+                                     "text": request.data[i]["text"],
+                                     "quzitrue": request.data[i]["quzitrue"]}
             question_serializer = QuestionSerializer(data=question_complit_data)
 
             if question_serializer.is_valid():
