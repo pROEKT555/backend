@@ -26,23 +26,23 @@ class ContentView(APIView):
 class TestView(APIView):
     def get(self, request):
         test_output = [{
-                "author_id": output.author_id,
-                "author_name": Register.objects.get(id=output.author_id).login,
-                "name": output.name
-            } for output in Tests.objects.all()]
+            "author_id": output.author_id,
+            "author_name": Register.objects.get(id=output.author_id).login,
+            "name": output.name
+        } for output in Tests.objects.all()]
         question_output = [{
-                "test_id": output.test_id,
-                "quzitrue": output.quzitrue,
-                "text": output.text
-            } for output in Question.objects.all()]
-        answer_output = [{
-            "question_id": output.question_id,
+            "question_id": output.id,
+            "test_id": output.test_id,
+            "quzitrue": output.quzitrue,
             "text": output.text,
-            "is_true": output.is_true
-        } for output in Answer.objects.all()]
+            "answer": [{
+                "question_id": answ.question_id,
+                "text": answ.text,
+                "is_true": answ.is_true
+            } for answ in Answer.objects.filter(question_id=output.id)]
+        } for output in Question.objects.all()]
         return Response({"test_output": test_output,
-                         "question_output": question_output,
-                         "answer_output": answer_output})
+                         "question_output": question_output})
 
     def post(self, request):
         test_serializer = TestSerializer(data=request.data[0])
