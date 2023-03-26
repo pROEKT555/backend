@@ -11,8 +11,7 @@
   "quzitrue":2,
   "answ": [
    {
-    "text": "answ1",
-    "is_true": true
+    "text": "answ1"
    },
    {
     "text": "answ2"
@@ -24,8 +23,7 @@
   "quzitrue":2,
   "answ": [
    {
-    "text": "answ3",
-    "is_true": true
+    "text": "answ3"
    },
    {
     "text": "answ4"
