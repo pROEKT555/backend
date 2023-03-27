@@ -37,8 +37,7 @@ class TestView(APIView):
             "text": output.text,
             "answer": [{
                 "question_id": answ.question_id,
-                "text": answ.text,
-                "is_true": answ.is_true
+                "text": answ.text
             } for answ in Answer.objects.filter(question_id=output.id)]
         } for output in Question.objects.all()]
         return Response({"test_output": test_output,
