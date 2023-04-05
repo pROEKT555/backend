@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Content, Tests, Question, Answer
+from .models import *
 from register.serializer import RegisterSerializer
 
 class ContentSerializer(serializers.ModelSerializer):
@@ -29,4 +29,11 @@ class AnswerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Answer
+        fields = '__all__'
+
+class CheckSerializer(serializers.ModelSerializer):
+    test_id = TestSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Check
         fields = '__all__'

@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Content, Tests, Question, Answer
+from .models import *
 from register.models import Register
 from .serializer import *
 
@@ -21,11 +21,12 @@ class ContentView(APIView):
         serializer = ContentSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return Response({"complite": True})
+            return Response(status=status.HTTP_201_CREATED)
 
 class TestView(APIView):
     def get(self, request):
         test_output = [{
+            "test_id": output.id,
             "author_id": output.author_id,
             "author_name": Register.objects.get(id=output.author_id).login,
             "name": output.name
@@ -74,3 +75,35 @@ class TestView(APIView):
                 return Response(answer_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(status=status.HTTP_201_CREATED)
+
+class CheckView(APIView):
+    def get(self, request):
+        output = [{
+                "test_id": output.test_id,
+                "name": output.name,
+                "rating": output.rating
+            } for output in Check.objects.all()
+        ]
+        return Response(output)
+    
+    def post(self, request):
+        obj = Question.objects.filter(test_id=request.data["test_id"])
+
+        g_rating = 12 / len(obj)
+        x = 0
+        rating = 0
+        
+        for i in obj:
+            if request.data["is_rating"][x] == i.quzitrue:
+                rating += g_rating
+            x += 1
+
+        checkserializer = CheckSerializer(data={"test": request.data["test_id"],
+                                                "name": request.data["name"],
+                                                "rating": rating})
+
+        if checkserializer.is_valid(raise_exception=True):
+            checkserializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
