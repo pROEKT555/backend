@@ -100,7 +100,7 @@ class CheckView(APIView):
 
         checkserializer = CheckSerializer(data={"test": request.data["test_id"],
                                                 "name": request.data["name"],
-                                                "rating": rating})
+                                                "rating": round(rating)})
 
         if checkserializer.is_valid(raise_exception=True):
             checkserializer.save()
