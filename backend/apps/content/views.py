@@ -107,3 +107,28 @@ class CheckView(APIView):
             return Response(status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class TestInfoView(APIView):
+    def post(self, request):
+        obj_tests = Tests.objects.filter(id=request.data["test_id"])
+        obj_question = Question.objects.filter(test_id=request.data["test_id"])
+
+        tests = [{
+            "test_id": output.id,
+            "author_id": output.author_id,
+            "author_name": Register.objects.get(id=output.author_id).login,
+            "name": output.name
+        } for output in obj_tests]
+        question = [{
+            "question_id": output.id,
+            "test_id": output.test_id,
+            "quzitrue": output.quzitrue,
+            "text": output.text,
+            "answer": [{
+                "question_id": answ.question_id,
+                "text": answ.text
+            } for answ in Answer.objects.filter(question_id=output.id)]
+        } for output in obj_question]
+
+        return Response({"tests": tests,
+                        "question": question})
